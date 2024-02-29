@@ -1,6 +1,6 @@
 [build]
   publish = "dist"
-  command = "npx expo export -p web"
+  command = "expo export -p web && npx workbox-cli generateSW workbox-config.js"
 
 [[redirects]]
   from = "/*"
