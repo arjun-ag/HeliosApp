@@ -28,7 +28,7 @@
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/favicon.png",
+      "favicon": "./assets/images/heliosIcon.png",
       "pwa": {
         "manifest": {
           "start_url": "/",
@@ -37,7 +37,7 @@
           "theme_color": "#000000",
           "icons": [
             {
-              "src": "./assets/images/HeliosIcon.png",
+              "src": "./assets/images/heliosIcon.png",
               "sizes": "512x512",
               "type": "image/png"
             }
