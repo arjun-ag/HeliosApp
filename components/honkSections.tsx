@@ -12,7 +12,7 @@ export function s1() {
     return (      
         <View style = {styles.page}>
         <StoryHelios text="index" />
-        <Text style={[styles.title]}>These times, so full of gasps for <Text style={{ fontStyle: 'italic' }}>nothing</Text> done,{"\n"}Hide truth behind the sound of <Text style={{ fontStyle: 'italic' }}>rain</Text> that roars </Text>
+        <Text style={[styles.title]}>These times, so full of gasps for <Text style={{ fontFamily: 'BaskervilleItalics' }}>nothing</Text> done,{"\n"}Hide truth behind the sound of <Text style={{ fontFamily: 'BaskervilleItalics' }}>rain</Text> that roars </Text>
       </View>
     );
   }

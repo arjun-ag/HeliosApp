@@ -75,7 +75,7 @@ import { StyleSheet, Dimensions, ScrollView,
       
         const rotateX = animatedValue.interpolate({
           inputRange: [0, 1],
-          outputRange: ['0deg', '180deg'], // Simulate dice roll along X axis
+          outputRange: ['0deg', '360deg'], // Simulate dice roll along X axis
         });
       
         // const rotateY = animatedValue.interpolate({
@@ -84,7 +84,7 @@ import { StyleSheet, Dimensions, ScrollView,
         // });
       
         return (
-          <Animated.View style={{ opacity, transform: [{ rotateX }] }}>
+          <Animated.View style={{ opacity, transform: [{ rotateX}] }}>
             {children}
           </Animated.View>
         );
