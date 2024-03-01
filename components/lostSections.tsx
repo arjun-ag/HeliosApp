@@ -63,10 +63,19 @@ export function s1() {
     return (      
         <View style = {styles.page}>
          
-        <Text style={[styles.title]}>I stood there on the pavement by the bookstore, lost in myself. Around, the great city  <Text style={{ fontFamily: 'BaskervilleItalics' }}>swirled</Text> - and people marched about with  <Text style={{ fontFamily: 'BaskervilleItalics' }}>blatant</Text> purpose. </Text>
+        <Text style={[styles.title]}>I stood there on the pavement by the bookstore, lost in myself. Around, the great city  <Text style={{ fontFamily: 'BaskervilleItalics' }}>swirled</Text> - </Text>
       </View>
     );
   }
+  export function s1a() {
+    return (      
+        <View style = {styles.page}>
+         
+        <Text style={[styles.title]}>and people marched about with  <Text style={{ fontFamily: 'BaskervilleItalics' }}>blatant</Text> {'\n'}purpose. </Text>
+      </View>
+    );
+  }
+  
   export function s2() {
     return (      
         <View style = {styles.page}>
@@ -79,15 +88,24 @@ export function s1() {
     return (      
         <View style = {styles.page}>
          
-        <Text style={[styles.title]}>And from the streets, the musty smells of passers-by and little food carts wafted upwards between squarely built skyscrapers to reach  <Text style={{ fontFamily: 'BaskervilleItalics' }}>flattened</Text> clouds that  <Text style={{ fontFamily: 'BaskervilleItalics' }}>weaved</Text> about the sun.</Text>
+        <Text style={[styles.title]}>And from the streets, the musty smells of passers-by and little food carts wafted upwards between squarely built skyscrapers </Text>
       </View>
     );
   }
+  export function s3a() {
+    return (      
+        <View style = {styles.page}>
+         
+        <Text style={[styles.title]}>to reach  <Text style={{ fontFamily: 'BaskervilleItalics' }}>flattened</Text> clouds that  <Text style={{ fontFamily: 'BaskervilleItalics' }}>weaved</Text> about the sun.</Text>
+      </View>
+    );
+  }
+  
   export function s4() {
     return (      
         <View style = {styles.page}>
          
-        <Text style={[styles.title]}> I let myself be washed away by the crowds, and realised only a half-hour later that I was  <Text style={{ fontFamily: 'BaskervilleItalics' }}>wafting</Text> towards the waterfront.  </Text>
+        <Text style={[styles.title]}>I let myself be washed away by the crowds, and realised only a half-hour later that I was  <Text style={{ fontFamily: 'BaskervilleItalics' }}>wafting</Text> towards the waterfront.  </Text>
       </View>
     );
   }
@@ -103,7 +121,7 @@ export function s1() {
     return (      
         <View style = {styles.page}>
          
-        <Text style={[styles.title]}> I saw a little girl roaming along the bushes looking for something. </Text>
+        <Text style={[styles.title]}>I saw a little girl roaming along the bushes looking for something. </Text>
       </View>
     );
   }
@@ -119,7 +137,7 @@ export function s1() {
     return (      
         <View style = {styles.page}>
          
-        <Text style={[styles.title]}> A crimson hue was setting across the horizon. I looked at the river for a long moment, then back at the girl, who </Text>
+        <Text style={[styles.title]}>A crimson hue was setting across the horizon. I looked at the river for a long moment, then back at the girl, who </Text>
       </View>
     );
   }
@@ -143,15 +161,24 @@ export function s1() {
     return (      
         <View style = {styles.page}>
          
-        <Text style={[styles.title]}>I walked past them both thinking that the little girl, one day, would perhaps herself  <Text style={{ fontFamily: 'BaskervilleItalics' }}>nurse</Text> a broken heart, and look back on this lazy afternoon to  <Text style={{ fontFamily: 'BaskervilleItalics' }}>find</Text> her peace.  </Text>
-      </View>
+        <Text style={[styles.title]}>I walked past them both thinking that the little girl, one day, would perhaps herself  <Text style={{ fontFamily: 'BaskervilleItalics' }}>nurse</Text> a broken heart, and look </Text>
+              </View>
     );
   }
+  export function s11a() {
+    return (      
+        <View style = {styles.page}>
+         
+        <Text style={[styles.title]}>back on this lazy afternoon to  <Text style={{ fontFamily: 'BaskervilleItalics' }}>find</Text> her peace.  </Text>
+              </View>
+    );
+  }
+
   export function s12() {
     return (      
         <View style = {styles.page}>
          
-        <Text style={[styles.title]}>To know that she  <Text style={{ fontFamily: 'BaskervilleItalics' }}>too</Text> had been happy once.</Text>
+        <Text style={[styles.title]}>To know that she <Text style={{ fontFamily: 'BaskervilleItalics' }}>too</Text> had been happy once.</Text>
       </View>
     );
   }
@@ -159,15 +186,24 @@ export function s1() {
     return (      
         <View style = {styles.page}>
          
-        <Text style={[styles.title]}>But as I hobbled to the river, these thoughts left quickly and were replaced by that grudging  <Text style={{ fontFamily: 'BaskervilleItalics' }}>hum</Text> of a persistent realisation—I had not written in two months. </Text>
+        <Text style={[styles.title]}>But as I hobbled to the river, these thoughts left quickly and were replaced by that grudging <Text style={{ fontFamily: 'BaskervilleItalics' }}>hum</Text> of a persistent realisation— </Text>
       </View>
     );
   }
+  export function s13a() {
+    return (      
+        <View style = {styles.page}>
+         
+        <Text style={[styles.title]}>I had not written in two months.</Text>
+      </View>
+    );
+  }
+  
   export function s14() {
     return (      
         <View style = {styles.page}>
          
-        <Text style={[styles.title]}> And while there had been a time when line upon line burst from me to form such verses drenched in honest truth — the  <Text style={{ fontFamily: 'BaskervilleItalics' }}>well</Text> had dried up.</Text>
+        <Text style={[styles.title]}>And while there had been a time when line upon line burst from me to form such verses drenched in honest truth — the <Text style={{ fontFamily: 'BaskervilleItalics' }}>well</Text> had dried up.</Text>
       </View>
     );
   }
@@ -183,7 +219,7 @@ export function s1() {
     return (      
         <View style = {styles.page}>
          
-        <Text style={[styles.title]}> with no blood in me left to  <Text style={{ fontFamily: 'BaskervilleItalics' }}>spill</Text> upon it.</Text>
+        <Text style={[styles.title]}>with no blood in me left to <Text style={{ fontFamily: 'BaskervilleItalics' }}>spill</Text> upon it.</Text>
       </View>
     );
   }
@@ -191,10 +227,19 @@ export function s1() {
     return (      
         <View style = {styles.page}>
          
-        <Text style={[styles.title]}>While to some, this problem would appear a trifle, to one in whom the word had been a fountain  <Text style={{ fontFamily: 'BaskervilleItalics' }}>gushing</Text> down Himalayan heights, its absence caused a drought—</Text>
+        <Text style={[styles.title]}>While to some, this problem would appear a trifle, </Text>
       </View>
     );
   }
+  export function s17a() {
+    return (      
+        <View style = {styles.page}>
+         
+        <Text style={[styles.title]}>to one in whom the word had been a fountain  <Text style={{ fontFamily: 'BaskervilleItalics' }}>gushing</Text> down Himalayan heights, its absence caused a drought—</Text>
+      </View>
+    );
+  }
+  
   export function s18() {
     return (      
         <View style = {styles.page}>
@@ -231,7 +276,7 @@ export function s1() {
     return (      
         <View style = {styles.page}>
          
-        <Text style={[styles.title]}>In my other hand, there was an old and  <Text style={{ fontFamily: 'BaskervilleItalics' }}>crumbling</Text> copy of Dorian Gray.</Text>
+        <Text style={[styles.title]}>In my other hand, there was an old and <Text style={{ fontFamily: 'BaskervilleItalics' }}>crumbling</Text> copy of Dorian Gray.</Text>
       </View>
     );
   }
@@ -239,10 +284,19 @@ export function s1() {
     return (      
         <View style = {styles.page}>
          
-        <Text style={[styles.title]}>There was something about this book that had stayed with me from when I had first read it as a 17-year-old,  <Text style={{ fontFamily: 'BaskervilleItalics' }}>wilting</Text> beneath the heat of an Indian summer: Immortality. </Text>
+        <Text style={[styles.title]}>There was something about this book that had stayed with me from when I had first read it as a 17-year-old, </Text>
       </View>
     );
   }
+  export function s23a() {
+    return (      
+        <View style = {styles.page}>
+         
+        <Text style={[styles.title]}><Text style={{ fontFamily: 'BaskervilleItalics' }}>wilting</Text> beneath the heat of an Indian summer: Immortality. </Text>
+      </View>
+    );
+  }
+  
   export function s24() {
     return (      
         <View style = {styles.page}>

@@ -10,8 +10,8 @@ import * as sections from '../components/lostSections';
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 const elements = [
-  <sections.i1/>,<sections.s1 />,<sections.s2 />,<sections.s3 />,<sections.s4 />,<sections.s5 />,<sections.s6 />,<sections.i2/>,<sections.s7 />,<sections.s8 />,<sections.s9 />,<sections.s10 />,<sections.s11 />,<sections.s12 />,<sections.i3/>,<sections.s13 />,<sections.s14 />,<sections.s15 />,
-  <sections.s16 />,<sections.s17 />,<sections.s18 />,<sections.i4/>,<sections.s19 />,<sections.s20 />,<sections.s21 />,<sections.s22 />,<sections.s23 />,<sections.s24 />,<sections.i5/>,<sections.s25 />,<sections.s26 />,<sections.s27 />,<sections.s28 />,<sections.s29 />,<sections.s30 />,<sections.i6/>,
+  <sections.i1/>,<sections.s1 />,<sections.s1a />,<sections.s2 />,<sections.s3 />,<sections.s3a />,<sections.s4 />,<sections.s5 />,<sections.s6 />,<sections.i2/>,<sections.s7 />,<sections.s8 />,<sections.s9 />,<sections.s10 />,<sections.s11 />,<sections.s11a />,<sections.s12 />,<sections.i3/>,<sections.s13 />,<sections.s13a />,<sections.s14 />,<sections.s15 />,
+  <sections.s16 />,<sections.s17 />,<sections.s17a />,<sections.s18 />,<sections.i4/>,<sections.s19 />,<sections.s20 />,<sections.s21 />,<sections.s22 />,<sections.s23 />,<sections.s23a />,<sections.s24 />,<sections.i5/>,<sections.s25 />,<sections.s26 />,<sections.s27 />,<sections.s28 />,<sections.s29 />,<sections.s30 />,<sections.i6/>,
   <sections.s31 />,<sections.s32 />,<sections.s33 />,<sections.s34 />,<sections.s35 />,<sections.s36 />,<sections.i7/>,<sections.s37 />,<sections.s38 />,<sections.s39 />,<sections.s40 />,<sections.s41 />,<sections.s42 />,<sections.i3/>,
   <sections.s43 />,<sections.s44 />,<sections.s45 />,<sections.s46 />,<sections.s47 />,<sections.s48 />,<sections.i1/>, <sections.s49 />,<sections.s50 />,<sections.s51 />,<sections.s52 />,<sections.s53 />,<sections.s54 />,<sections.i5/>, <sections.s55 />,
   <sections.s56 />,<sections.s57 />,<sections.s58 />,<sections.s59 />,<sections.s60 />,<sections.i4/>, <sections.s61 />,<sections.s62 />
@@ -63,7 +63,7 @@ const LostScreen:React.FC<Props> = ({ navigation }) => {
             [
               screenHeight * index - screenHeight*0.7,
               screenHeight * index,
-              screenHeight * index + screenHeight*0.2,
+              screenHeight * index + screenHeight*0.1,
             ],
             [0, 1, 0]
           ),
