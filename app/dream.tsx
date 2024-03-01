@@ -1,18 +1,16 @@
 import { StyleSheet, Dimensions, ScrollView, 
-    NativeSyntheticEvent, NativeScrollEvent, Animated } from 'react-native';
-  import { useState, useEffect } from 'react';
+    NativeSyntheticEvent, NativeScrollEvent, TouchableWithoutFeedback } from 'react-native';
   import StoryHelios from '@/components/storyHelios';
-  import Logo from '@/components/logo'
   import { NativeStackNavigationProp } from '@react-navigation/native-stack';
   import { Text, View } from '@/components/Themed';
+  import Animated, {useSharedValue, useAnimatedScrollHandler, useAnimatedStyle, interpolate} from 'react-native-reanimated';
   import * as sections from '../components/dreamSections';
   
   const screenWidth = Dimensions.get('window').width;
   const screenHeight = Dimensions.get('window').height;
-  interface AnimatedSectionProps {
-    isActive: boolean;
-    children: React.ReactNode;
-  }
+  const elements = [
+    <sections.i1/>,<sections.s1 />,<sections.s2 />,<sections.s3 />,<sections.s4 />,<sections.i2/>,<sections.s5 />,<sections.s6 />,<sections.s7 />,<sections.s8 />,<sections.s9 />,<sections.i3/>,<sections.s10 />,<sections.s11 />,<sections.s12 />,<sections.s13 />,<sections.s14 />,<sections.s15 />
+  ];
   
   type Props = {
     navigation: NativeStackNavigationProp<any>;
@@ -20,103 +18,59 @@ import { StyleSheet, Dimensions, ScrollView,
   
   const DreamScreen:React.FC<Props> = ({ navigation }) => {
   
-    const [activeSection, setActiveSection] = useState(0);
-    const transitionAnimation = new Animated.Value(0);
-  
-    const handleScroll = (event:NativeSyntheticEvent<NativeScrollEvent>) => {
-      const scrollPosition = event.nativeEvent.contentOffset.y;
-      // Determine the active section based on the scrollPosition
-      // For example, if each section is 500 pixels tall:
-      const currentSection = Math.floor(scrollPosition / screenHeight);
-      setActiveSection(currentSection);
-    };
+    const scrollY = useSharedValue(0);
+
+    const scrollHandlerY = useAnimatedScrollHandler({
+        onScroll: (event) => {
+        scrollY.value = event.contentOffset.y;
+        },
+    });
+    const logoStyle = useAnimatedStyle(() => {
+        const shouldBeVisible = !(
+          (scrollY.value > 0 && scrollY.value < screenHeight) ||
+          (scrollY.value > 5 * screenHeight && scrollY.value < 6 * screenHeight) ||
+          (scrollY.value > 10 * screenHeight && scrollY.value < 11 * screenHeight)
+        );
     
-    const AnimatedSection: React.FC<AnimatedSectionProps> = ({ isActive, children}) => {
-      // Define your animation based on isActive
-      // Example: Fade-in animation
-      const opacity = new Animated.Value(isActive ? 1 : 0);
-    
-      useEffect(() => {
-        Animated.timing(opacity, {
-          toValue: isActive ? 1 : 0.5,
-          duration: 2000,
-          useNativeDriver: true,
-        }).start();
-      }, [isActive]);
-    
-      return (
-        <Animated.View style={{ opacity }}>
-          {children}
-        </Animated.View>
-      );
-    };
+        return {
+          opacity: shouldBeVisible ? 1 : 0,
+        };
+      });
   
     return (
-      <ScrollView style={styles.container} onScroll={handleScroll} scrollEventThrottle={16} >
-        <AnimatedSection isActive={activeSection === 0}>
-        <sections.s1 />
-        </AnimatedSection>
-        <AnimatedSection isActive={activeSection === 1}>
-          <sections.s2 />
-        </AnimatedSection>
-        <AnimatedSection isActive={activeSection === 1}>
-          <sections.s3 />
-        </AnimatedSection>
-        <AnimatedSection isActive={activeSection === 1}>
-          <sections.s4 />
-        </AnimatedSection>
-        <AnimatedSection isActive={activeSection === 1}>
-          <sections.s5 />
-        </AnimatedSection>
-        <AnimatedSection isActive={activeSection === 1}>
-          <sections.s6 />
-        </AnimatedSection>
-        <AnimatedSection isActive={activeSection === 1}>
-          <sections.s7 />
-        </AnimatedSection>
-        <AnimatedSection isActive={activeSection === 1}>
-          <sections.s8 />
-        </AnimatedSection>
-        <AnimatedSection isActive={activeSection === 1}>
-          <sections.s9 />
-        </AnimatedSection>
-        <AnimatedSection isActive={activeSection === 1}>
-          <sections.s10 />
-        </AnimatedSection>
-        <AnimatedSection isActive={activeSection === 1}>
-          <sections.s11 />
-        </AnimatedSection>
-        <AnimatedSection isActive={activeSection === 1}>
-          <sections.s12 />
-        </AnimatedSection>
-        <AnimatedSection isActive={activeSection === 1}>
-          <sections.s13 />
-        </AnimatedSection>
-        <AnimatedSection isActive={activeSection === 1}>
-          <sections.s14 />
-        </AnimatedSection>
-        <AnimatedSection isActive={activeSection === 1}>
-          <sections.s15 />
-        </AnimatedSection>
-        
-        
-  
-        {/* <Text style={styles.container}>{transitionComplete}</Text> */}
-        
-        
-        {/* <View style = {styles.page}>
-          <StoryHelios path="app/(tabs)/index.tsx" />
-        </View>
-        <View style = {styles.page}>
-          <StoryHelios path="app/(tabs)/index.tsx" />
-        </View>
-        <View style = {styles.page}>
-          <StoryHelios path="app/(tabs)/index.tsx" />
-        </View> */}
-  
-      </ScrollView>      
-  
-    );
+        <View>
+    
+        <Animated.ScrollView onScroll={scrollHandlerY} scrollEventThrottle={16} showsVerticalScrollIndicator={false}>  
+        {elements.map((Element, index) => {
+        const animatedStyle = useAnimatedStyle(() => {
+          return {
+            opacity: interpolate(
+              scrollY.value,
+              [
+                screenHeight * index - screenHeight*0.7,
+                screenHeight * index,
+                screenHeight * index + screenHeight*0.1,
+              ],
+              [0, 1, 0]
+            ),
+          };
+        });
+                return (
+                <Animated.View key={index} style={index % 5 === 0? null:animatedStyle}>
+                    {Element}
+                </Animated.View>
+                );
+            })}
+          </Animated.ScrollView> 
+          <TouchableWithoutFeedback onPress={() => navigation.navigate('nav')}>
+          <Animated.View style = {[styles.heliosLogo, logoStyle]}>
+            <View/>
+          </Animated.View>
+          </TouchableWithoutFeedback>
+    
+          </View>     
+      
+        );    
   }
   
   
@@ -138,6 +92,19 @@ import { StyleSheet, Dimensions, ScrollView,
       // justifyContent: 'center',
       // alignItems: 'center',
     },
+    heliosLogo: {
+        position: 'absolute',
+        width: 50,
+        alignItems: 'center',
+        height: 50,
+        zIndex: 1, // Make sure it stacks above the scroll content
+        borderRadius: 50,
+        transform: [{scaleY:1.6}],
+        top: (screenHeight) / 6,
+        left: screenWidth/2.3,
+    
+        backgroundColor: '#EC7318',
+      },
   });
   
 export default DreamScreen;

@@ -16,15 +16,10 @@ const HomeScreen:React.FC<Props> = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.log}>
-        <TouchableOpacity onPress={() => navigation.navigate('editorial')}>
-            <Image source={require('../assets/images/heliosLogo.png')} style={{ width: 300, height: 50 }} />
+        <TouchableOpacity onPress={() => navigation.navigate('nav')}>
+            <Image source={require('../assets/images/heliosLogo.png')} style={{ width: screenWidth, height: 80 }} />
         </TouchableOpacity>
       </View>
-      <Text style={[styles.text, styles.dream]} onPress={() => navigation.navigate('dream')}>Dream</Text>
-      <Text style={[styles.text, styles.onward]} onPress={() => navigation.navigate('onward')}>Onward</Text>
-      <Text style={[styles.text, styles.autumn]} onPress={() => navigation.navigate('autumn')}>Autumn</Text>
-      <Text style={[styles.text, styles.lost]} onPress={() => navigation.navigate('lost')}>Lost</Text>
-      <Text style={[styles.text, styles.honk]} onPress={() => navigation.navigate('honk')}>One Wayward Honk</Text>
     </View>
   );
 }

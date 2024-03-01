@@ -17,6 +17,7 @@ import HonkScreen from './honk';
 import OnwardScreen from './onward';
 import DreamScreen from './dream';
 import LostScreen from './lost'
+import NavScreen from './nav';
 
 const Stack = createNativeStackNavigator();
 
@@ -69,13 +70,14 @@ function RootLayoutNav() {
   return (
     <ThemeProvider value= {DefaultTheme}>
       <Stack.Navigator>
-        <Stack.Screen name="index" component={HomeScreen} />
-        <Stack.Screen name="editorial" component={EditorialScreen} />
-        <Stack.Screen name="honk" component={HonkScreen} />
-        <Stack.Screen name="dream" component={DreamScreen} />
-        <Stack.Screen name="autumn" component={AutumnScreen} />
-        <Stack.Screen name="onward" component={OnwardScreen} />
-        <Stack.Screen name="lost" component={LostScreen} />
+        <Stack.Screen name="index" component={HomeScreen} options={{ headerShown: false }}/>
+        <Stack.Screen name="nav" component={NavScreen} options={{ headerShown: false }}/>
+        <Stack.Screen name="editorial" component={EditorialScreen} options={{ headerShown: false }}/>
+        <Stack.Screen name="honk" component={HonkScreen} options={{ headerShown: false }}/>
+        <Stack.Screen name="dream" component={DreamScreen} options={{ headerShown: false }}/>
+        <Stack.Screen name="autumn" component={AutumnScreen} options={{ headerShown: false }}/>
+        <Stack.Screen name="onward" component={OnwardScreen} options={{ headerShown: false }}/>
+        <Stack.Screen name="lost" component={LostScreen} options={{ headerShown: false }}/>
       </Stack.Navigator>
     </ThemeProvider>
   );
