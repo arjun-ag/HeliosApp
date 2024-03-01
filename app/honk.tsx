@@ -1,9 +1,9 @@
 import { StyleSheet, Dimensions, ScrollView, 
-    NativeSyntheticEvent, NativeScrollEvent, Image, TouchableWithoutFeedback } from 'react-native';
+    NativeSyntheticEvent, NativeScrollEvent, Image, TouchableWithoutFeedback, Animated} from 'react-native';
   import { Text, View } from '@/components/Themed';
+  import {useRef} from 'react';
   import { NativeStackNavigationProp } from '@react-navigation/native-stack';
   import * as sections from '../components/honkSections';
-  import Animated, {useSharedValue, useAnimatedScrollHandler, useAnimatedStyle, interpolate} from 'react-native-reanimated';
   
   
 const screenWidth = Dimensions.get('window').width;
@@ -17,18 +17,16 @@ const styles = StyleSheet.create({
     },
 
     page: {
-      height: screenHeight + 20, // Set appropriate height
-      // justifyContent: 'center',
-      // alignItems: 'center',
+      height: screenHeight + 20, 
     },
     heliosLogo: {
         position: 'absolute',
-        width: 50,
+        width: 34,
         alignItems: 'center',
-        height: 50,
-        zIndex: 0, // Make sure it stacks above the scroll content
-        borderRadius: 50,
-        transform: [{scaleY:1.6}],
+        height: 35,
+        zIndex: 0, 
+        borderRadius: 40,
+        transform: [{scaleY:1.4}],
         top: (screenHeight) / 6,
         left: screenWidth/2.3,
     
@@ -56,54 +54,56 @@ const elements = [
   };
   
   const HonkScreen:React.FC<Props> = ({ navigation }) => {
-    const scrollY = useSharedValue(0);
+    const scrollY = useRef(new Animated.Value(0)).current;
     let isVisible = true;
-    const scrollHandlerY = useAnimatedScrollHandler({
-        onScroll: (event) => {
-        scrollY.value = event.contentOffset.y;
-        isVisible = scrollY.value < screenHeight || (scrollY.value > 2*screenHeight && scrollY.value < 3*screenHeight) ||
-    (scrollY.value > 4*screenHeight && scrollY.value < 5*screenHeight) || (scrollY.value > 6*screenHeight && scrollY.value < 7*screenHeight);
-        },
-    });
-    const logoStyle = useAnimatedStyle(() => {
-        const shouldBeVisible = !(
-          (scrollY.value > 0 && scrollY.value < screenHeight) ||
-          (scrollY.value > 5 * screenHeight && scrollY.value < 6 * screenHeight) ||
-          (scrollY.value > 10 * screenHeight && scrollY.value < 11 * screenHeight)
-        );
-    
-        return {
-          opacity: shouldBeVisible ? 1 : 0,
-        };
-      });
-    
-    return (
-    <View>
-    
-    <Animated.ScrollView onScroll={scrollHandlerY} scrollEventThrottle={16} showsVerticalScrollIndicator={false}>  
-    {elements.map((Element, index) => {
-    const animatedStyle = useAnimatedStyle(() => {
-      return {
-        opacity: interpolate(
-          scrollY.value,
-          [
-            screenHeight * index - screenHeight*0.7,
-            screenHeight * index,
-            screenHeight * index + screenHeight*0.1,
-          ],
-          [0, 1, 0]
-        ),
+    const scrollHandlerY = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+        // Update the scrollY value
+        scrollY.setValue(event.nativeEvent.contentOffset.y);
       };
-    });
+
+      const fadeInStartFactor = 0.1;  // Start fading earlier
+      const fadeInEndFactor = 0.9;    // End fading later
+    
+      const logoOpacity = scrollY.interpolate({
+        inputRange: elements.flatMap((_, idx) => [
+          screenHeight * (idx - fadeInStartFactor),
+          screenHeight * idx,
+          screenHeight * (idx + fadeInEndFactor),
+        ]),
+        outputRange: elements.flatMap((_, idx) => [
+          idx % 2 === 0 ? 1 : 0, // Fade out for sections.ix
+          0.1,                     // Fully visible
+          idx % 2 === 0 ? 1 : 0, // Fade out for sections.ix
+        ]),
+        extrapolate: 'clamp',
+      });
+    return (
+    <View style={styles.container}>
+    
+    <ScrollView onScroll={scrollHandlerY} scrollEventThrottle={16} showsVerticalScrollIndicator={false}>  
+    {elements.map((Element, index) => {
+            const inputRange = [
+                (index - 0.5) * screenHeight * 1,
+                index * screenHeight * 1,
+                (index + 0.25) * screenHeight * 1,
+                // (index + 0.5) * screenHeight * 0.75
+            ];
+            const animatedStyle = {
+                opacity: scrollY.interpolate({
+                  inputRange,
+                  outputRange: [0, 1,0],
+                  extrapolate: 'clamp',
+                }),
+              };
             return (
-            <Animated.View key={index} style={ index%2 === 0? animatedStyle:null}>
+            <Animated.View key={index} style={ index%2 ===0? animatedStyle :null}>
                 {Element}
             </Animated.View>
             );
         })}
-      </Animated.ScrollView> 
+      </ScrollView> 
       <TouchableWithoutFeedback onPress={() => navigation.navigate('nav')}>
-          <Animated.View style = {[styles.heliosLogo, logoStyle]}>
+          <Animated.View style = {[styles.heliosLogo, {opacity:logoOpacity}]}>
             <View/>
           </Animated.View>
           </TouchableWithoutFeedback>

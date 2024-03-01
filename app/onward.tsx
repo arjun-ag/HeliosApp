@@ -10,8 +10,8 @@ import { useEffect, useState } from 'react';
   const screenWidth = Dimensions.get('window').width;
   const screenHeight = Dimensions.get('window').height;
   const elements = [
-    <sections.i1/>,<sections.s1 />,<sections.s2 />,<sections.s3 />,<sections.s4 />,<sections.i2/>,<sections.s5 />,<sections.s6 />,<sections.s7 />,<sections.s8 />,,<sections.i3/>,<sections.s9 />,<sections.s10 />,<sections.s11 />,<sections.s12 />,<sections.i3/>,<sections.s13 />,<sections.s14 />,<sections.s15 />,
-    <sections.s16 />,<sections.i4/>,<sections.s17 />
+    <sections.i1/>,<sections.s1 />,<sections.s2 />,<sections.s3 />,<sections.s4 />,<sections.i2/>,<sections.s5 />,<sections.s6 />,<sections.s7 />,<sections.s8 />,<sections.i3/>,<sections.s9 />,<sections.s10 />,<sections.s11 />,<sections.s12 />,<sections.i4/>,<sections.s13 />,<sections.s14 />,<sections.s15 />,
+    <sections.s16 />,<sections.i1/>,<sections.s17 />
   ];
   
   type Props = {
@@ -34,7 +34,9 @@ import { useEffect, useState } from 'react';
         const shouldBeVisible = !(
           (scrollY.value > 0 && scrollY.value < screenHeight) ||
           (scrollY.value > 5 * screenHeight && scrollY.value < 6 * screenHeight) ||
-          (scrollY.value > 10 * screenHeight && scrollY.value < 11 * screenHeight)
+          (scrollY.value > 10 * screenHeight && scrollY.value < 11 * screenHeight) ||
+          (scrollY.value > 15 * screenHeight && scrollY.value < 16 * screenHeight) ||
+          (scrollY.value > 20 * screenHeight && scrollY.value < 21 * screenHeight)
         );
     
         return {
@@ -43,7 +45,7 @@ import { useEffect, useState } from 'react';
       });
   
     return (
-        <View>
+        <View style = {styles.container}>
     
         <Animated.ScrollView onScroll={scrollHandlerY} scrollEventThrottle={16} showsVerticalScrollIndicator={false}>  
         {elements.map((Element, index) => {
@@ -54,7 +56,7 @@ import { useEffect, useState } from 'react';
               [
                 screenHeight * index - screenHeight*0.7,
                 screenHeight * index,
-                screenHeight * index + screenHeight*0.3,
+                screenHeight * index + screenHeight*0.2,
               ],
               [0, 1, 0]
             ),
@@ -78,9 +80,7 @@ import { useEffect, useState } from 'react';
       
         );    
   }
-  
-  
-  
+
   
   const styles = StyleSheet.create({
     container: {
@@ -94,18 +94,18 @@ import { useEffect, useState } from 'react';
       width: '80%',
     },
     page: {
-      height: screenHeight + 20, // Set appropriate height
+      height: screenHeight, // Set appropriate height
       // justifyContent: 'center',
       // alignItems: 'center',
     },
     heliosLogo: {
         position: 'absolute',
-        width: 50,
+        width: 34,
         alignItems: 'center',
-        height: 50,
-        zIndex: 1, // Make sure it stacks above the scroll content
-        borderRadius: 50,
-        transform: [{scaleY:1.6}],
+        height: 35,
+        zIndex: 0, 
+        borderRadius: 40,
+        transform: [{scaleY:1.4}],
         top: (screenHeight) / 6,
         left: screenWidth/2.3,
     
