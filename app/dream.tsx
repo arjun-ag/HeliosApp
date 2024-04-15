@@ -1,76 +1,47 @@
-import { StyleSheet, Dimensions, ScrollView, 
-    NativeSyntheticEvent, NativeScrollEvent, TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet, Dimensions, ScrollView, Image, TouchableOpacity } from 'react-native';
   import StoryHelios from '@/components/storyHelios';
   import { NativeStackNavigationProp } from '@react-navigation/native-stack';
   import { Text, View } from '@/components/Themed';
   import Animated, {useSharedValue, useAnimatedScrollHandler, useAnimatedStyle, interpolate} from 'react-native-reanimated';
-  import * as sections from '../components/dreamSections';
   
-  const screenWidth = Dimensions.get('window').width;
-  const screenHeight = Dimensions.get('window').height;
-  const elements = [
-    <sections.i1/>,<sections.s1 />,<sections.s2 />,<sections.s3 />,<sections.s4 />,<sections.i2/>,<sections.s5 />,<sections.s6 />,<sections.s7 />,<sections.s8 />,<sections.i3/>,<sections.s9 />,<sections.s10 />,<sections.s11 />,<sections.s12 />,<sections.i1/>,<sections.s13 />,<sections.s14 />,<sections.s15 />
-  ];
+  const {width, height} = Dimensions.get('window');
   
   type Props = {
     navigation: NativeStackNavigationProp<any>;
   };
-  
-  const DreamScreen:React.FC<Props> = ({ navigation }) => {
-  
-    const scrollY = useSharedValue(0);
 
-    const scrollHandlerY = useAnimatedScrollHandler({
-        onScroll: (event) => {
-        scrollY.value = event.contentOffset.y;
-        },
-    });
-    const logoStyle = useAnimatedStyle(() => {
-        const shouldBeVisible = !(
-          (scrollY.value > 0 && scrollY.value < screenHeight) ||
-          (scrollY.value > 5 * screenHeight && scrollY.value < 6 * screenHeight) ||
-          (scrollY.value > 10 * screenHeight && scrollY.value < 11 * screenHeight) ||
-          (scrollY.value > 15 * screenHeight && scrollY.value < 16 * screenHeight)
-        );
+  const DreamScreen:React.FC<Props> = ({ navigation }) => {
     
-        return {
-          opacity: shouldBeVisible ? 1 : 0,
-        };
-      });
-  
     return (
-        <View style = {styles.container}>
-    
-        <Animated.ScrollView onScroll={scrollHandlerY} scrollEventThrottle={16} showsVerticalScrollIndicator={false}>  
-        {elements.map((Element, index) => {
-        const animatedStyle = useAnimatedStyle(() => {
-          return {
-            opacity: interpolate(
-              scrollY.value,
-              [
-                screenHeight * index - screenHeight*0.7,
-                screenHeight * index,
-                screenHeight * index + screenHeight*0.2,
-              ],
-              [0, 1, 0]
-            ),
-          };
-        });
-                return (
-                <Animated.View key={index} style={index % 5 === 0? null:animatedStyle}>
-                    {Element}
-                </Animated.View>
-                );
-            })}
-          </Animated.ScrollView> 
-          <TouchableWithoutFeedback onPress={() => navigation.navigate('nav')}>
-          <Animated.View style = {[styles.heliosLogo, logoStyle]}>
-            <View/>
-          </Animated.View>
-          </TouchableWithoutFeedback>
-    
-          </View>     
-      
+    <View style = {styles.container}>
+        <ScrollView style={styles.scrollContainer} stickyHeaderIndices={[0]}>
+
+        <View style={styles.stickyHeader}>
+          {/* <Image
+            source={require('../assets/images/heliosLogo.png')} // Replace with your image URL or local source
+            style={styles.headerImage}
+          /> */}
+        </View>
+
+            <Text style = {[styles.subText, styles.subTitle1]}>Editor's Pick</Text>
+            <Text style = {styles.titleText}>Dream</Text>
+            <Text style = {[styles.subText, styles.subTitle2]}>"To calm the waters, still the great sea within ourselves untile they are purged of all false movement, that is the great problem of our existence"</Text>
+            <Image source={require('../assets/images2/dream1.png')} style={styles.img}/>
+
+            <Text style = {[styles.subText, styles.article]}> I turned twenty-one this year. I remember sitting in the park, on a summer afternoon, when the sun first passes through the clouds, then a canopy of trees, before it gleams on your cheek, reading Yeats’ ‘The Second Coming’. It felt too idyllic a day to be engulfed by any blood-dimmed tide of anarchy. Yet somehow, I believe, I understood then for the first time what it meant to forsake one’s innocence – a warm glint in the eyes that fades suddenly into stony silence. Our world has a way of manifesting the unexpected, of dangling our hopes and dreams by a most fragile thread of trust. Sometimes the thread snaps. Sometimes we are broken. Yeats, however, goes still further. His emanation of the deity is not a kind and kindred spirit, but a great and terrible beast with a “gaze as blank and pitiless as the sun” – that naked moonscape of the Northern Himalayas on a cloudless desert night – stark and wide and forceful and detached. I saw, only a few nights ago, an old and grizzly man reclined against a lonely lamppost with a saxophone. He was free. Lilting to the contours of a musical dream. He played all night, sometimes fiercely over the blaring honks of cars with drunken men and women rushing home, sometimes alone. I sat there by the lamppost for a while, looking sometimes at him, sometimes at the orangish glow from thin wisps of clouds against the moon. Perhaps our times demand the insistence of a solitary voice if it is to be heard. Or they demand our strength of character – our obstinance upon an ideal. Or they demand nothing at all. But I would like to find some remnants of that slouching beast, that glorious deity, in my soul – so I can plant my feet firmly enough to take an unrelenting stand for something good. 
+            </Text>
+
+            <TouchableOpacity onPress={() => navigation.navigate('stayMode')}>
+              <Image
+                source={require('../assets/images2/dice.png')} // Replace with your image URL or local source
+                style={styles.headerImage}
+              />
+            </TouchableOpacity>
+
+        </ScrollView>
+
+      </View>
+
         );    
   }
   
@@ -78,27 +49,78 @@ import { StyleSheet, Dimensions, ScrollView,
   
   
   const styles = StyleSheet.create({
+    
+    headerImage: {
+      width: width,  
+      // bottom: -30,       
+      // height: 90,  
+      resizeMode: 'contain',
+      bottom:10
+  
+    },
+    subText : {
+      fontSize: 16,
+      fontStyle: 'normal',
+      textAlign: 'center',
+      color: '#000',
+      letterSpacing: -0.24,
+      alignItems: 'center',
+      fontFamily: 'Bodoni',
+      lineHeight: 30,
+      fontWeight: '400',
+    },
+    article: {
+      width: width/1.1,
+      marginLeft: width/25,
+      textAlign:'left',
+      marginBottom:10
+    },
+    subTitle1: {
+      width : width,
+      marginBottom:10,
+      marginTop: height/75
+    },
+    subTitle2: {
+      fontSize : 14,
+      lineHeight:20,
+      width:width/1.2,
+      marginLeft:width/12,
+      marginBottom: 20
+    },
+    img: {
+      width: width, 
+      height: height/2,
+      marginBottom:20,
+    },
+    titleText: {
+      fontSize: 32,
+      fontStyle: 'normal',
+      textAlign: 'center',
+      width: width,
+      color: '#000',
+      letterSpacing: -0.23,
+      alignItems: 'center',
+      fontFamily: 'Bodoni',
+      lineHeight: 30,
+      fontWeight: '900',
+      marginBottom:20
+    },
+  stickyHeader: {
+    height: height/20,
+    backgroundColor: 'white',
+    // justifyContent: 'flex-end',
+    position: 'relative',  // Ensures absolute positioning is relative to the header
+    alignItems: 'center',
+    zIndex: 1,
+
+  },
     container: {
       flex: 1,
-      // alignItems: 'center',
-      // justifyContent: 'center',
+      backgroundColor: '#fff',
     },
-    page: {
-      height: screenHeight, 
-    },
-    heliosLogo: {
-        position: 'absolute',
-        width: 34,
-        alignItems: 'center',
-        height: 35,
-        zIndex: 0, 
-        borderRadius: 40,
-        transform: [{scaleY:1.4}],
-        top: (screenHeight) / 6,
-        left: screenWidth/2.3,
-    
-        backgroundColor: '#EC7318',
-      },
+    scrollContainer: {
+      flex:1
+    }
   });
   
 export default DreamScreen;

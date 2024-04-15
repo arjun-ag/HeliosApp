@@ -13,11 +13,12 @@ import {
 import HomeScreen from './index';
 import AutumnScreen from './autumn';
 import EditorialScreen from './editorial';
-import HonkScreen from './honk';
+import GoModeScreen from './goMode';
 import OnwardScreen from './onward';
 import DreamScreen from './dream';
 import LostScreen from './lost'
-import NavScreen from './nav';
+import StayModeScreen from './stayMode';
+import HamletScreen from './hamlet';
 
 const Stack = createNativeStackNavigator();
 
@@ -40,6 +41,7 @@ export default function HomeLayout() {
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
     Baskerville: LibreBaskerville_400Regular,
     BaskervilleItalics: LibreBaskerville_400Regular_Italic,
+    Bodoni: require('../assets/fonts/BodoniSvtyTwoSCITCTT-Book.woff.otf'),
     ...FontAwesome.font,
   });
 
@@ -71,9 +73,10 @@ function RootLayoutNav() {
     <ThemeProvider value= {DefaultTheme}>
       <Stack.Navigator>
         <Stack.Screen name="index" component={HomeScreen} options={{ headerShown: false }}/>
-        <Stack.Screen name="nav" component={NavScreen} options={{ headerShown: false }}/>
+        <Stack.Screen name="stayMode" component={StayModeScreen} options={{ headerShown: false }}/>
+        <Stack.Screen name="hamlet" component={HamletScreen} options={{headerShown: false}}/>
         <Stack.Screen name="editorial" component={EditorialScreen} options={{ headerShown: false }}/>
-        <Stack.Screen name="honk" component={HonkScreen} options={{ headerShown: false }}/>
+        <Stack.Screen name="goMode" component={GoModeScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="dream" component={DreamScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="autumn" component={AutumnScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="onward" component={OnwardScreen} options={{ headerShown: false }}/>

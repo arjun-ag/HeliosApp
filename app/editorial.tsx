@@ -1,140 +1,52 @@
-import { StyleSheet, Dimensions, ScrollView, 
-    NativeSyntheticEvent, NativeScrollEvent, TouchableWithoutFeedback } from 'react-native';
-  import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-  import { Text, View } from '@/components/Themed';
-  import {useRef} from 'react';
-  import Animated, {useSharedValue, useAnimatedScrollHandler, useAnimatedStyle, interpolate} from 'react-native-reanimated';
-  import * as sections from '../components/editorialSections';
-  
-  const screenWidth = Dimensions.get('window').width;
-  const screenHeight = Dimensions.get('window').height;
-  const elements = [
-    <sections.i7/>,<sections.s1 />,<sections.s2 />,<sections.s3 />,<sections.s4 />,<sections.s5 />,<sections.s6 />,<sections.i1/>,<sections.s7 />,<sections.s8 />,<sections.s9 />,<sections.s10 />,<sections.s11 />,<sections.s12 />,<sections.i2/>,<sections.s13 />,<sections.s14 />,<sections.s15 />,
-    <sections.s16 />,<sections.s17 />,<sections.s18 />,<sections.i3/>,<sections.s19 />,<sections.s20 />,<sections.s21 />,<sections.s22 />,<sections.s23 />,<sections.s24 />,<sections.i4/>,<sections.s25 />,<sections.s26 />,<sections.s27 />,<sections.s28 />,<sections.s29 />,<sections.s30 />,<sections.i5/>,
-    <sections.s31 />,<sections.s32 />,<sections.s33 />,<sections.s34 />,<sections.s35 />,<sections.s36 />,<sections.i6/>,<sections.s37 />,<sections.s38 />,<sections.s39 />,<sections.s40 />,<sections.s41 />,<sections.s42 />,<sections.i7/>
-  ];
+import { StatusBar } from 'expo-status-bar';
+import { useState, useRef, useCallback } from 'react';
+import { Platform, StyleSheet, Image, Dimensions, ViewToken , ScrollView, FlatList, ImageBackground, TouchableOpacity } from 'react-native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { Text, View } from '@/components/Themed';
+
+  const {width, height} = Dimensions.get('window');
   
   type Props = {
     navigation: NativeStackNavigationProp<any>;
   };
   
   const EditorialScreen:React.FC<Props> = ({ navigation }) => {
-//     const scrollY = useRef(new Animated.Value(0)).current;
-//     let isVisible = true;
-//     const scrollHandlerY = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-//         // Update the scrollY value
-//         scrollY.setValue(event.nativeEvent.contentOffset.y);
-//       };
 
-//       const fadeInStartFactor = 0.1;  // Start fading earlier
-//       const fadeInEndFactor = 0.9;    // End fading later
-    
-//       const logoOpacity = scrollY.interpolate({
-//         inputRange: elements.flatMap((_, idx) => [
-//           screenHeight * (idx - fadeInStartFactor),
-//           screenHeight * idx,
-//           screenHeight * (idx + fadeInEndFactor),
-//         ]),
-//         outputRange: elements.flatMap((_, idx) => [
-//           idx %  === 0 ? 1 : 0, // Fade out for sections.ix
-//           0.1,                     // Fully visible
-//           idx % 2 === 0 ? 1 : 0, // Fade out for sections.ix
-//         ]),
-//         extrapolate: 'clamp',
-//       });
-//     return (
-//     <View style={styles.container}>
-    
-//     <ScrollView onScroll={scrollHandlerY} scrollEventThrottle={16} showsVerticalScrollIndicator={false}>  
-//     {elements.map((Element, index) => {
-//             const inputRange = [
-//                 (index - 0.5) * screenHeight * 1,
-//                 index * screenHeight * 1,
-//                 (index + 0.25) * screenHeight * 1,
-//                 // (index + 0.5) * screenHeight * 0.75
-//             ];
-//             const animatedStyle = {
-//                 opacity: scrollY.interpolate({
-//                   inputRange,
-//                   outputRange: [0, 1,0],
-//                   extrapolate: 'clamp',
-//                 }),
-//               };
-//             return (
-//             <Animated.View key={index} style={ index%2 ===0? animatedStyle :null}>
-//                 {Element}
-//             </Animated.View>
-//             );
-//         })}
-//       </ScrollView> 
-//       <TouchableWithoutFeedback onPress={() => navigation.navigate('nav')}>
-//           <Animated.View style = {[styles.heliosLogo, {opacity:logoOpacity}]}>
-//             <View/>
-//           </Animated.View>
-//           </TouchableWithoutFeedback>
-
-//       </View>     
-  
-//     );
-//   }
-    const scrollY = useSharedValue(0);
-
-    const scrollHandlerY = useAnimatedScrollHandler({
-        onScroll: (event) => {
-        scrollY.value = event.contentOffset.y;
-        },
-    });
-    const logoStyle = useAnimatedStyle(() => {
-        const shouldBeVisible = !(
-          (scrollY.value > 0 && scrollY.value < screenHeight) ||
-          (scrollY.value > 7 * screenHeight && scrollY.value < 8 * screenHeight) ||
-          (scrollY.value > 14 * screenHeight && scrollY.value < 15 * screenHeight) ||
-          (scrollY.value > 21 * screenHeight && scrollY.value < 22 * screenHeight) ||
-          (scrollY.value > 28 * screenHeight && scrollY.value < 29 * screenHeight) ||
-          (scrollY.value > 35 * screenHeight && scrollY.value < 36 * screenHeight) ||
-          (scrollY.value > 42 * screenHeight && scrollY.value < 43 * screenHeight) ||
-          (scrollY.value > 49 * screenHeight && scrollY.value < 50 * screenHeight) ||
-          (scrollY.value > 56 * screenHeight && scrollY.value < 57 * screenHeight)
-        );
-    
-        return {
-          opacity: shouldBeVisible ? 1 : 0,
-        };
-      });
-  
     return (
-        <View style = {styles.container}>
-    
-        <Animated.ScrollView onScroll={scrollHandlerY} scrollEventThrottle={16} showsVerticalScrollIndicator={false}>  
-        {elements.map((Element, index) => {
-        const animatedStyle = useAnimatedStyle(() => {
-          return {
-            opacity: interpolate(
-              scrollY.value,
-              [
-                screenHeight * index - screenHeight*0.7,
-                screenHeight * index,
-                screenHeight * index + screenHeight*0.6,
-              ],
-              [0, 1, 0]
-            ),
-          };
-        });
-                return (
-                <Animated.View key={index} style={ index%7 === 0? null:animatedStyle}>
-                    {Element}
-                </Animated.View>
-                );
-            })}
-          </Animated.ScrollView> 
-          <TouchableWithoutFeedback onPress={() => navigation.navigate('nav')}>
-          <Animated.View style = {[styles.heliosLogo, logoStyle]}>
-            <View/>
-          </Animated.View>
-          </TouchableWithoutFeedback>
-    
-          </View>     
-      
+      <View style = {styles.container}>
+        <ScrollView style={styles.scrollContainer} stickyHeaderIndices={[0]}>
+
+        <View style={styles.stickyHeader}>
+          {/* <Image
+            source={require('../assets/images/heliosLogo.png')} // Replace with your image URL or local source
+            style={styles.headerImage}
+          /> */}
+        </View>
+
+            <Text style = {[styles.subText, styles.subTitle1]}>editorial</Text>
+            <Text style = {styles.titleText}>The Essential Manifesto</Text>
+            <Text style = {[styles.subText, styles.subTitle2]}>"To calm the waters, still the great sea within ourselves untile they are purged of all false movement, that is the great problem of our existence"</Text>
+            <Image source={require('../assets/images2/editorial.jpeg')} style={styles.img}/>
+
+            <Text style = {[styles.subText, styles.article]}> I will answer one question - what is the essence of this publication; in other words, the question of what this publication will grow to become.{'\n\n'}
+            I remember as a seven year old, lying down on my bed, on the ground floor of our house, staring out at bright peepal leaves glazed by the tropical sunrise of my childhood, wondering what it might be like to hold a conversation with Chandragupta or Napoleon or Lakshmibai; wondering about what that wild and unshackled glint in their eyes might reveal. Most of my time was spent in the company of books that told the great stories of their legendary exploits. Reading Will Durant’s “The Greatest Minds and Ideas of All Time” in high school, I could not help but be so thoroughly convinced by the idea that the impetus, for all our marches through the muck and on towards a shimmering hope that lingers draped upon the horizon, has always been an enlightened general or prophet, or king or queen. And yet, no matter how wise my seventeen year old self believed himself to be, he could not be much further from the truth. {'\n\n'}
+            We are not, you see, subscribed blindly to the altar of great men and women – no matter how much that appears to be the case. I refuse that our predicament be either one of spineless apathy or greasy sycophancy. That cannot be why we flock to strong leaders. Within the soul of each human being, I am certain, is a whispering voice that speaks the truth – whether that voice is drowned by the tempests of wanton thought, or amplified into action, is another matter altogether. The very presence of that voice indicates, to me at any rate, that beneath the furious sloshing of our imperfections, we are, in our own uniqueness, perfect beings shackled by our own ignorance. To calm the waters, still the great seas within ourselves until they are purged of all false movement, that is the great problem of our existence. And one, we shall, no doubt, surmount. Either way, a life spent pursuing a solution to that most grand and existential game is no doubt a noble one – and high nobility founded in truth, and nothing else, is the objective of human existence.{'\n\n'}
+            Our impetus for action, then, cannot be so disparate from our raison d'etre to be either the egotistical act of becoming a ‘great man’ or the cowardly act of becoming a ‘yes man’. It can, most certainly, as we understand it now, be some distortion of our raison d’etre, some perversion of it, but not so utterly divorced from it. What do I mean by this?  Human history, viewed from an evolutionary lens, presents a litany of disasters caused by the misunderstanding or intentional distortion of essential truths. In examining each abhorrent dogma, one finds, if sufficiently humble and open, the presence of some mangled and misshapen truth. The growth of our species into strength and abundance, an ideal few would discount as trivial or misguided, can be distorted into the assumption of a teutonic master race that must enslave and exterminate all others to enable the next great evolutionary leap. The ideal of the mother as the divine creator and nurturer of life can be distorted to constrain a woman’s activity to the domestic.  Beneath the distortions that are the ‘great man theory’, or the shameless worship of heroes, or any other gross simplification of our existence, then, we find an almost anxious search for cosmos (order) amidst the chaos, for certainty amidst ignorance. {'\n\n'}
+            Returning now to the question of this article, the goal is singular: to present you, my dear reader, with that fundamental question and anxiety of our existence, so you may wrestle with it by the horns and form some conclusions of your own. So you may roll about the mud under the weight of our shared endeavor, and stop, and stand tall in unperturbed self-assurance with the world on your shoulders. For while for so many, our life is a grave and pensive matter to be taken on with decided self-importance, to us, it’s just a game – one we play only because it’s too much fun. At those who would say, as they do no doubt, that you are too distracted by tick tociks and Kardashians and cricket to care, we can scoff together. Because I am yet to meet someone who does not, at least, in the silence between two thoughts, hear the voice of the universe calling their name and beckoning them to the greatest game of all. I know you care because at every point from the cave paintings by a lone flame in the Ajanta caves, to hobbling on the surface of the moon, we have contemplated our place amongst the stars. It’s how we’re wired.{'\n'}
+            So, what can this publication be? A reminder. 
+            </Text>
+
+            <TouchableOpacity onPress={() => navigation.navigate('stayMode')}>
+              <Image
+                source={require('../assets/images2/dice.png')} // Replace with your image URL or local source
+                style={styles.headerImage}
+              />
+            </TouchableOpacity>
+
+        </ScrollView>
+
+      </View>
+
         );    
   }
   
@@ -142,27 +54,78 @@ import { StyleSheet, Dimensions, ScrollView,
   
   
   const styles = StyleSheet.create({
+    
+    headerImage: {
+      width: width,  
+      // bottom: -30,       
+      // height: 90,  
+      resizeMode: 'contain',
+      bottom:10
+  
+    },
+    subText : {
+      fontSize: 16,
+      fontStyle: 'normal',
+      textAlign: 'center',
+      color: '#000',
+      letterSpacing: -0.24,
+      alignItems: 'center',
+      fontFamily: 'Bodoni',
+      lineHeight: 30,
+      fontWeight: '400',
+    },
+    article: {
+      width: width/1.1,
+      marginLeft: width/25,
+      textAlign:'left',
+      marginBottom:10
+    },
+    subTitle1: {
+      width : width,
+      marginBottom:10,
+      marginTop: height/75
+    },
+    subTitle2: {
+      fontSize : 14,
+      lineHeight:20,
+      width:width/1.2,
+      marginLeft:width/12,
+      marginBottom: 20
+    },
+    img: {
+      width: width, 
+      height: height/2,
+      marginBottom:20,
+    },
+    titleText: {
+      fontSize: 32,
+      fontStyle: 'normal',
+      textAlign: 'center',
+      width: width,
+      color: '#000',
+      letterSpacing: -0.23,
+      alignItems: 'center',
+      fontFamily: 'Bodoni',
+      lineHeight: 30,
+      fontWeight: '900',
+      marginBottom:20
+    },
+  stickyHeader: {
+    height: height/20,
+    backgroundColor: 'white',
+    // justifyContent: 'flex-end',
+    position: 'relative',  // Ensures absolute positioning is relative to the header
+    alignItems: 'center',
+    zIndex: 1,
+
+  },
     container: {
       flex: 1,
-      // alignItems: 'center',
-      // justifyContent: 'center',
+      backgroundColor: '#fff',
     },
-    page: {
-      height: screenHeight,
-    },
-    heliosLogo: {
-        position: 'absolute',
-        width: 34,
-        alignItems: 'center',
-        height: 35,
-        zIndex: 0, 
-        borderRadius: 40,
-        transform: [{scaleY:1.4}],
-        top: (screenHeight) / 6,
-        left: screenWidth/2.3,
-    
-        backgroundColor: '#EC7318',
-      },
+    scrollContainer: {
+      flex:1
+    }
   });
   
 export default EditorialScreen;

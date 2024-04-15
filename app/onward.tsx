@@ -1,116 +1,125 @@
-import { StyleSheet, Dimensions, ScrollView, 
-    NativeSyntheticEvent, NativeScrollEvent, TouchableWithoutFeedback} from 'react-native';
+import { StyleSheet, Dimensions, ScrollView, Image, TouchableOpacity } from 'react-native';
   import StoryHelios from '@/components/storyHelios';
   import { NativeStackNavigationProp } from '@react-navigation/native-stack';
   import { Text, View } from '@/components/Themed';
   import Animated, {useSharedValue, useAnimatedScrollHandler, useAnimatedStyle, interpolate} from 'react-native-reanimated';
-  import * as sections from '../components/onwardSections';
-import { useEffect, useState } from 'react';
   
-  const screenWidth = Dimensions.get('window').width;
-  const screenHeight = Dimensions.get('window').height;
-  const elements = [
-    <sections.i1/>,<sections.s1 />,<sections.s2 />,<sections.s3 />,<sections.s4 />,<sections.i2/>,<sections.s5 />,<sections.s6 />,<sections.s7 />,<sections.s8 />,<sections.i3/>,<sections.s9 />,<sections.s10 />,<sections.s11 />,<sections.s12 />,<sections.i4/>,<sections.s13 />,<sections.s14 />,<sections.s15 />,
-    <sections.s16 />,<sections.i1/>,<sections.s17 />
-  ];
+  const {width, height} = Dimensions.get('window');
   
   type Props = {
     navigation: NativeStackNavigationProp<any>;
   };
-  
+
   const OnwardScreen:React.FC<Props> = ({ navigation }) => {
-  
-    const scrollY = useSharedValue(0);
-    // const [isVisible, setIsVisible] = useState(true);
-
-
-
-    const scrollHandlerY = useAnimatedScrollHandler({
-        onScroll: (event) => {
-        scrollY.value = event.contentOffset.y;
-        },
-    });
-    const logoStyle = useAnimatedStyle(() => {
-        const shouldBeVisible = !(
-          (scrollY.value > 0 && scrollY.value < screenHeight) ||
-          (scrollY.value > 5 * screenHeight && scrollY.value < 6 * screenHeight) ||
-          (scrollY.value > 10 * screenHeight && scrollY.value < 11 * screenHeight) ||
-          (scrollY.value > 15 * screenHeight && scrollY.value < 16 * screenHeight) ||
-          (scrollY.value > 20 * screenHeight && scrollY.value < 21 * screenHeight)
-        );
     
-        return {
-          opacity: shouldBeVisible ? 1 : 0,
-        };
-      });
-  
     return (
-        <View style = {styles.container}>
-    
-        <Animated.ScrollView onScroll={scrollHandlerY} scrollEventThrottle={16} showsVerticalScrollIndicator={false}>  
-        {elements.map((Element, index) => {
-        const animatedStyle = useAnimatedStyle(() => {
-          return {
-            opacity: interpolate(
-              scrollY.value,
-              [
-                screenHeight * index - screenHeight*0.7,
-                screenHeight * index,
-                screenHeight * index + screenHeight*0.2,
-              ],
-              [0, 1, 0]
-            ),
-          };
-        });
-                return (
-                <Animated.View key={index} style={index % 5 === 0? null:animatedStyle}>
-                    {Element}
-                </Animated.View>
-                );
-            })}
-          </Animated.ScrollView> 
-          <TouchableWithoutFeedback onPress={() => navigation.navigate('nav')}>
-          <Animated.View style = {[styles.heliosLogo, logoStyle]}>
-            <View/>
-          </Animated.View>
-          </TouchableWithoutFeedback>
+    <View style = {styles.container}>
+        <ScrollView style={styles.scrollContainer} stickyHeaderIndices={[0]}>
 
-    
-          </View>     
-      
+        <View style={styles.stickyHeader}>
+        </View>
+
+            <Text style = {[styles.subText, styles.subTitle1]}>Editor's Pick</Text>
+            <Text style = {styles.titleText}>Onward</Text>
+            <Text style = {[styles.subText, styles.subTitle2]}>"Writing"</Text>
+            <Image source={require('../assets/images2/autumn1.png')} style={styles.img}/>
+
+            <Text style = {[styles.subText, styles.article]}> I waited and waited by Fortieth and Sixth, and soon it began to snow. I have never seen that part of town as hopelessly empty as it was on this night in early February. The winds grew; the dead and empty branches of trees snapped in half and fell into the muck of soiled snow and slush on the streets. It was, no doubt, foolish to have stayed waiting there as long as I did. I knew that. But I want no guilt for lack of trying. Black cars with glaring red backlights rushed into the night every few minutes. The cops stayed in their vans on patrol, with blaring blue and orange sirens glinting falling snowflakes like a dream. It was a certain impersonality of the hour that made the cold more bearable. I stood, leaning against a wall, staring blankly at some shimmers in the darkness, playing my part. {'\n\n'}
+I remember my screenwriting professor, a most charming man who reminds me eerily of Julian Morrow from ‘The Secret History’, told me once that lurking beneath the surface of my words, he sensed a dormant and terrible hero churning the motors onward. So, I decided to lay the matter before you, quite early on, to tell you he was wrong. There are no daemons hiding behind the veneer of these words. Only the words themselves are; and so, by extension, am I, their writer. I have been misunderstood as a romantic, and on the worst days, as delusional, too much to allow you to do the same. {'\n\n'}
+A little more than an hour later, when the police van, presumably, had found another neighbourhood to cast its lighthouse-like beacons of orange and teal, I concluded that I had, of course, been stood up. I unhinged myself from the little ledge my elbows rested on and waded home in the blizzard. 
+
+
+
+            </Text>
+
+            <TouchableOpacity onPress={() => navigation.navigate('stayMode')}>
+              <Image
+                source={require('../assets/images2/dice.png')}
+                style={styles.headerImage}
+              />
+            </TouchableOpacity>
+
+        </ScrollView>
+
+      </View>
+
         );    
   }
-
+  
+  
+  
   
   const styles = StyleSheet.create({
+    
+    headerImage: {
+      width: width,   
+      resizeMode: 'contain',
+      bottom:10
+  
+    },
+    subText : {
+      fontSize: 16,
+      fontStyle: 'normal',
+      textAlign: 'center',
+      color: '#000',
+      letterSpacing: -0.24,
+      alignItems: 'center',
+      fontFamily: 'Bodoni',
+      lineHeight: 30,
+      fontWeight: '400',
+    },
+    article: {
+      width: width/1.1,
+      marginLeft: width/25,
+      textAlign:'left',
+      marginBottom:10
+    },
+    subTitle1: {
+      width : width,
+      marginBottom:10,
+      marginTop: height/75
+    },
+    subTitle2: {
+      fontSize : 14,
+      lineHeight:20,
+      width:width/1.2,
+      marginLeft:width/12,
+      marginBottom: 20
+    },
+    img: {
+      width: width, 
+      height: height/2,
+      marginBottom:20,
+    },
+    titleText: {
+      fontSize: 32,
+      fontStyle: 'normal',
+      textAlign: 'center',
+      width: width,
+      color: '#000',
+      letterSpacing: -0.23,
+      alignItems: 'center',
+      fontFamily: 'Bodoni',
+      lineHeight: 30,
+      fontWeight: '900',
+      marginBottom:20
+    },
+  stickyHeader: {
+    height: height/20,
+    backgroundColor: 'white',
+    // justifyContent: 'flex-end',
+    position: 'relative',  // Ensures absolute positioning is relative to the header
+    alignItems: 'center',
+    zIndex: 1,
+
+  },
     container: {
       flex: 1,
-      // alignItems: 'center',
-      // justifyContent: 'center',
+      backgroundColor: '#fff',
     },
-    separator: {
-      marginVertical: 30,
-      height: 1,
-      width: '80%',
-    },
-    page: {
-      height: screenHeight, // Set appropriate height
-      // justifyContent: 'center',
-      // alignItems: 'center',
-    },
-    heliosLogo: {
-        position: 'absolute',
-        width: 34,
-        alignItems: 'center',
-        height: 35,
-        zIndex: 0, 
-        borderRadius: 40,
-        transform: [{scaleY:1.4}],
-        top: (screenHeight) / 6,
-        left: screenWidth/2.3,
-    
-        backgroundColor: '#EC7318',
-      },
+    scrollContainer: {
+      flex:1
+    }
   });
   
 export default OnwardScreen;

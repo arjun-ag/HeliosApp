@@ -16,7 +16,7 @@ const HomeScreen:React.FC<Props> = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.log}>
-        <TouchableOpacity onPress={() => navigation.navigate('nav')}>
+        <TouchableOpacity onPress={() => navigation.navigate('stayMode')}>
             <Image source={require('../assets/images/heliosLogo.png')} style={{ width: screenWidth, height: 80 }} />
         </TouchableOpacity>
       </View>

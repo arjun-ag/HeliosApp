@@ -1,77 +1,55 @@
-import { StyleSheet, Dimensions, ScrollView, 
-    NativeSyntheticEvent, NativeScrollEvent, TouchableWithoutFeedback } from 'react-native';
-  import { Text, View } from '@/components/Themed';
+import { StyleSheet, Dimensions, ScrollView, Image, TouchableOpacity } from 'react-native';
+  import StoryHelios from '@/components/storyHelios';
   import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+  import { Text, View } from '@/components/Themed';
   import Animated, {useSharedValue, useAnimatedScrollHandler, useAnimatedStyle, interpolate} from 'react-native-reanimated';
-  import * as sections from '../components/autumnSections';
   
-  const screenWidth = Dimensions.get('window').width;
-  const screenHeight = Dimensions.get('window').height;
-
-  const elements = [
-    <sections.i1/>,<sections.s1 />,<sections.s2 />,<sections.s3 />,<sections.i2/>,<sections.s4 />,<sections.s5 />,<sections.s6 />,<sections.i3/>,<sections.s7 />,<sections.s8 />,<sections.s9 />,<sections.i1/>,<sections.s10 />,<sections.s11 />,<sections.s12 />,<sections.i4/>,<sections.s13 />,<sections.s14 />
-  ];
+  const {width, height} = Dimensions.get('window');
   
   type Props = {
     navigation: NativeStackNavigationProp<any>;
   };
-  
-  const AutumnScreen:React.FC<Props> = ({ navigation }) => {
-  
-    const scrollY = useSharedValue(0);
 
-    const scrollHandlerY = useAnimatedScrollHandler({
-        onScroll: (event) => {
-        scrollY.value = event.contentOffset.y;
-        },
-    });
-    const logoStyle = useAnimatedStyle(() => {
-        const shouldBeVisible = !(
-          (scrollY.value > 0 && scrollY.value < screenHeight) ||
-          (scrollY.value > 4 * screenHeight && scrollY.value < 5 * screenHeight) ||
-          (scrollY.value > 8 * screenHeight && scrollY.value < 9 * screenHeight) ||
-          (scrollY.value > 12 * screenHeight && scrollY.value < 13 * screenHeight) ||
-          (scrollY.value > 16 * screenHeight && scrollY.value < 17 * screenHeight)
-        );
+  const AutumnScreen:React.FC<Props> = ({ navigation }) => {
     
-        return {
-          opacity: shouldBeVisible ? 1 : 0,
-        };
-      });
-  
     return (
-        <View style = {styles.container}>
-    
-        <Animated.ScrollView onScroll={scrollHandlerY} scrollEventThrottle={16} showsVerticalScrollIndicator={false}>  
-        {elements.map((Element, index) => {
-        const animatedStyle = useAnimatedStyle(() => {
-          return {
-            opacity: interpolate(
-              scrollY.value,
-              [
-                screenHeight * index - screenHeight*0.7,
-                screenHeight * index,
-                screenHeight * index + screenHeight*0.2,
-              ],
-              [0, 1, 0]
-            ),
-          };
-        });
-                return (
-                <Animated.View key={index} style={index % 4 === 0 ?null:animatedStyle}>
-                    {Element}
-                </Animated.View>
-                );
-            })}
-          </Animated.ScrollView> 
-          <TouchableWithoutFeedback onPress={() => navigation.navigate('nav')}>
-          <Animated.View style = {[styles.heliosLogo, logoStyle]}>
-            <View/>
-          </Animated.View>
-          </TouchableWithoutFeedback>
-    
-          </View>     
-      
+    <View style = {styles.container}>
+        <ScrollView style={styles.scrollContainer} stickyHeaderIndices={[0]}>
+
+        <View style={styles.stickyHeader}>
+        </View>
+
+            <Text style = {[styles.subText, styles.subTitle1]}>Editor's Pick</Text>
+            <Text style = {styles.titleText}>Autumn</Text>
+            <Text style = {[styles.subText, styles.subTitle2]}>"Westward"</Text>
+            <Image source={require('../assets/images2/autumn1.png')} style={styles.img}/>
+
+            <Text style = {[styles.subText, styles.article]}> Today, I biked across Manhattan. Slowly, the sun set on the horizon, and I looked west from Forty-First and Sixth Avenue to watch the sky turn red. In the distance, birds circled above the water and joined their friends in going home. An old lady with one of those walkers that have breaks and handles waited patiently behind me all the while. The crowds walked swiftly around us. I realised after a minute and turned around to apologise. She was as tall as my mother and as thin as her too.{'\n\n'} 
+            “I’m so sorry”. {'\n'}
+“I couldn’t help looking myself,” she sighed, and parked her stroller where we were standing. {'\n\n'}
+A blinking stop sign… a row of cars with executives from the corporate offices nearby waiting to go home, or the club, or wherever else such people go when they are not at work.{'\n\n'}
+“We should cross over now.” {'\n'}
+“You go on, I’ll be right behind you”, she said, still looking westward. {'\n'}
+Their engines revved. A few more moments the blinking stop persisted. I asked her again. {'\n'}
+“It’s a little dangerous here.” {'\n'}
+“I’m so glad it’s summer.” {'\n\n'}
+The light turned green. And all the cars nudged at each other to move. Then one honked, then another. {'\n\n'}
+“Too bad we’re past summer solstice,” she shrugged, “it’s only downhill from here.” {'\n'}
+I stared at her for a moment, then to the reddish sun sinking behind a bridge.
+
+            </Text>
+
+            <TouchableOpacity onPress={() => navigation.navigate('stayMode')}>
+              <Image
+                source={require('../assets/images2/dice.png')}
+                style={styles.headerImage}
+              />
+            </TouchableOpacity>
+
+        </ScrollView>
+
+      </View>
+
         );    
   }
   
@@ -79,27 +57,76 @@ import { StyleSheet, Dimensions, ScrollView,
   
   
   const styles = StyleSheet.create({
+    
+    headerImage: {
+      width: width,   
+      resizeMode: 'contain',
+      bottom:10
+  
+    },
+    subText : {
+      fontSize: 16,
+      fontStyle: 'normal',
+      textAlign: 'center',
+      color: '#000',
+      letterSpacing: -0.24,
+      alignItems: 'center',
+      fontFamily: 'Bodoni',
+      lineHeight: 30,
+      fontWeight: '400',
+    },
+    article: {
+      width: width/1.1,
+      marginLeft: width/25,
+      textAlign:'left',
+      marginBottom:10
+    },
+    subTitle1: {
+      width : width,
+      marginBottom:10,
+      marginTop: height/75
+    },
+    subTitle2: {
+      fontSize : 14,
+      lineHeight:20,
+      width:width/1.2,
+      marginLeft:width/12,
+      marginBottom: 20
+    },
+    img: {
+      width: width, 
+      height: height/2,
+      marginBottom:20,
+    },
+    titleText: {
+      fontSize: 32,
+      fontStyle: 'normal',
+      textAlign: 'center',
+      width: width,
+      color: '#000',
+      letterSpacing: -0.23,
+      alignItems: 'center',
+      fontFamily: 'Bodoni',
+      lineHeight: 30,
+      fontWeight: '900',
+      marginBottom:20
+    },
+  stickyHeader: {
+    height: height/20,
+    backgroundColor: 'white',
+    // justifyContent: 'flex-end',
+    position: 'relative',  // Ensures absolute positioning is relative to the header
+    alignItems: 'center',
+    zIndex: 1,
+
+  },
     container: {
       flex: 1,
-      // alignItems: 'center',
-      // justifyContent: 'center',
+      backgroundColor: '#fff',
     },
-    page: {
-      height: screenHeight + 20, // Set appropriate height
-    },
-    heliosLogo: {
-        position: 'absolute',
-        width: 34,
-        alignItems: 'center',
-        height: 35,
-        zIndex: 0, 
-        borderRadius: 40,
-        transform: [{scaleY:1.4}],
-        top: (screenHeight) / 6,
-        left: screenWidth/2.3,
-    
-        backgroundColor: '#EC7318',
-      },
+    scrollContainer: {
+      flex:1
+    }
   });
   
 export default AutumnScreen;
